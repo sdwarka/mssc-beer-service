@@ -13,6 +13,7 @@
 	<name>mssc-beer-service</name>
 	<description>SFG Beer Service</description>
 
+	<!-- project coordinates -->
 	<groupId>guru.springframework</groupId>
 	<artifactId>mssc-beer-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>

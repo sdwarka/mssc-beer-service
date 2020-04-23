@@ -25,6 +25,7 @@
 		<jaxb.version>2.3.0</jaxb.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<mapstruct.version>1.3.1.Final</mapstruct.version>
 	</properties>
 
 	<dependencies>
@@ -84,6 +85,13 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- bring in mapstruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -103,6 +111,40 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- ensure we can use mapstruct and lombok together -->
+			<plugin>
+				<!-- For the maven compiler plugin... -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<!-- ...apply the following mapstruct and lombok configs -->
+				<configuration>
+
+					<!-- specify the annotation processor paths ... -->
+					<annotationProcessorPaths>
+						<!-- ... for mapstruct ... -->
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${mapstruct.version}</version>
+						</path>
+						<!-- and for lombok ... -->
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
+
+					<!-- ... and configure compiler args to tell the compiler
+					to use Spring @Component annotations on generated code -->
+					<compilerArgs>
+						<compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+					</compilerArgs>
+
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
